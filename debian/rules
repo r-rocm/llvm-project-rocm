@@ -13,8 +13,8 @@ export DH_VERBOSE = 1
 #export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
 
 ROCM_VERSION=6.2.4
-MAKEOPTS="-j $[ $(nproc) / 2 ]"
-
+MAKEOPTS := "-j $(shell nproc)"
+BUILD_PATH := build-llvm
 
 %:
 	dh $@
@@ -68,7 +68,8 @@ override_dh_auto_configure:
 		-DROCM_LLVM_BACKWARD_COMPAT_LINK_TARGET="./lib/llvm" \
 		-DCLANG_LINK_FLANG_LEGACY=ON \
 		-DFLANG_INCLUDE_DOCS=OFF \
-		-S "llvm/"
+		-S "llvm/" \
+		-B $(BUILD_PATH)
 # lack of hsa include
 
 
@@ -78,15 +79,13 @@ override_dh_auto_build: \
 	stamps/clang-tidy
 
 stamps/clang:
-	cmake --build ${MAKEOPTS} clang lld compiler-rt
+	cmake --build $(BUILD_PATH) -- ${MAKEOPTS} clang lld compiler-rt
 
 stamps/runtimes:
-	cmake --build ${MAKEOPTS} runtimes cxx
+	cmake --build $(BUILD_PATH) -- ${MAKEOPTS} runtimes cxx
 
 stamps/clang-tidy:
-	cmake --build ${MAKEOPTS} clang-tidy
-
-
+	cmake --build $(BUILD_PATH) -- ${MAKEOPTS} clang-tidy
 
 
 # dh_make generated override targets.
