@@ -25,6 +25,7 @@ Build-Depends:
  dh-exec, dh-ocaml,
  libpfm4-dev, python3-setuptools, libz3-dev,
  wasi-libc,
+ hsa-dev-rocm,
 Standards-Version: 4.6.2
 Vcs-Git: https://github.com/r-rocm/llvm-project-rocm
 
