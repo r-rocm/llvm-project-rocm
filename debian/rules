@@ -18,6 +18,7 @@ ROCM_PATH=/opt/rocm-${ROCM_VERSION}
 MAKEOPTS := "-j $(shell nproc)"
 TOP_DIR := $(shell pwd)
 BUILD_PATH := build-llvm
+DEB_INST := $(TOP_DIR)/debian/tmp/
 
 %:
 	dh $@
@@ -89,6 +90,9 @@ stamps/runtimes:
 
 stamps/clang-tidy:
 	cmake --build $(BUILD_PATH) -- ${MAKEOPTS} clang-tidy
+
+override_dh_auto_install:
+	DESTDIR=$(DEB_INST)/ cmake --build $(BUILD_PATH) -- ${MAKEOPTS} install
 
 
 # dh_make generated override targets.
