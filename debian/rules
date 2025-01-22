@@ -26,7 +26,7 @@ DEB_INST := $(TOP_DIR)/debian/tmp/
 override_dh_auto_configure:
 	cmake \
 		-GNinja \
-		-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+		-DCMAKE_BUILD_TYPE=Release \
 		-DLLVM_PARALLEL_LINK_JOBS=4 \
 		-DCMAKE_INSTALL_PREFIX="/opt/rocm-${ROCM_VERSION}" \
 		-DCPACK_PACKAGING_INSTALL_PREFIX="/opt/rocm-${ROCM_VERSION}" \
