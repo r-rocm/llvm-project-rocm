@@ -4,7 +4,7 @@ export DH_VERBOSE = 1
 
 ROCM_VERSION=6.2.4
 ROCM_PATH=/opt/rocm-${ROCM_VERSION}
-MAKEOPTS := "-j $(shell nproc)"
+MAKEOPTS := "-j 32"
 TOP_DIR := $(shell pwd)
 BUILD_PATH := build-llvm
 DEB_INST := $(TOP_DIR)/debian/llvm-project-rocm
