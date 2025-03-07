@@ -9,6 +9,8 @@ TOP_DIR := $(shell pwd)
 BUILD_PATH := build-llvm
 DEB_INST := $(TOP_DIR)/debian/llvm-project-rocm
 
+# TODO: No Test run. It is Dangerous
+
 %:
 	dh $@
 
@@ -69,7 +71,8 @@ override_dh_auto_configure:
 override_dh_auto_build: \
 	stamps/clang \
 	stamps/runtimes \
-	stamps/clang-tidy
+	stamps/clang-tidy \
+	stamps/ocaml_doc
 
 stamps/clang:
 	cmake --build $(BUILD_PATH) -- ${MAKEOPTS} clang lld compiler-rt
@@ -79,6 +82,9 @@ stamps/runtimes:
 
 stamps/clang-tidy:
 	cmake --build $(BUILD_PATH) -- ${MAKEOPTS} clang-tidy
+
+stamps/ocaml_doc:
+	cmake --build $(BUILD_PATH) -- ${MAKEOPTS} ocaml_doc
 
 override_dh_auto_install:
 	DESTDIR=$(DEB_INST)/ cmake --build $(BUILD_PATH) -- ${MAKEOPTS} install
